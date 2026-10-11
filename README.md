@@ -118,7 +118,6 @@ SW1 pulls `EN` low and is a plain hardware reset; it does not touch NVS.
 
 ## Known limitations
 
-- Matter publishing is commented out in `main.cpp` while bench testing continues.
 - The LDO (U3, `MCP1700`, 250 mA) cannot supply Wi-Fi. Confirmed on the bench:
   10 brownout resets in 15 s, every one at Wi-Fi association. Thread works; Wi-Fi
   needs more bulk capacitance on 3V3 and/or a 500-600 mA regulator.
