@@ -63,8 +63,8 @@
 #endif
 
 /* Link settings. The source of truth is the master:
- *   firmware/main/mbus.cpp:61-73 - 2400 baud, 8 data bits, EVEN parity, 1 stop
- *   firmware/main/mbus.h:9       - primary address 0x05
+ *   examples/matter/KamstrupMultical403/main/mbus.cpp:61-73 - 2400 baud, 8 data bits, EVEN parity, 1 stop
+ *   examples/matter/KamstrupMultical403/main/mbus.h:9       - primary address 0x05
  * A mismatch here is the classic silent failure: the master simply times out
  * having received no bytes at all. */
 #define MBUS_BAUD_RATE_DEFAULT 2400
@@ -193,7 +193,7 @@
  *   reconstruction says otherwise.
  *
  * Not the master's UART driver: the FRAM_ERR and PARITY_ERR paths in
- * esp_driver_uart (checked against ESP-IDF v5.5.4, the version firmware/ builds
+ * esp_driver_uart (checked against ESP-IDF v5.5.4, the version the examples build
  * against) do not reset the RX FIFO - only FIFO overflow and the RS485 modes
  * do - so a bad character does not take buffered good ones with it.
  *
