@@ -106,6 +106,29 @@ to already be running.
 
 SW1 pulls `EN` low and is a plain hardware reset; it does not touch NVS.
 
+## Wiring the M-Bus
+
+The meter (or a simulated slave) connects to **J1**, the 2-pin 5 mm-pitch screw
+terminal labelled `M+` / `M-` on the silkscreen. Match the labels — the board's
+receiver (Q1 → R15 → Q3) is not polarity-agnostic.
+
+| J1 | Meter / slave |
+|---|---|
+| `M+` | bus `+` (mark idles at ~35 V, see `tools/pcb-test`) |
+| `M-` | bus `-` |
+
+This is the same two wires regardless of what is on the other end:
+
+- A real MULTICAL 403, wired per its installation manual.
+- The [`tools/kamstrup-403-sim`](../../../tools/kamstrup-403-sim) Pico: its own
+  M-Bus slave HAT does the level conversion (Pico GP0/GP1/GND to the HAT), and
+  it is the HAT's two-wire bus output that lands on J1 `M+`/`M-`.
+- The bench slave HAT used by `tools/pcb-test`.
+
+Only one slave at a time unless it is addressed — `MBUS_PRIMARY_ADDRESS` in
+`main/mbus.h` must match the slave's primary address, or the master polls into
+silence (`MBus: No response from meter at 0x..`) with no other symptom.
+
 ## Testing without a meter
 
 [`tools/kamstrup-403-sim`](../../../tools/kamstrup-403-sim) makes a Raspberry Pi
