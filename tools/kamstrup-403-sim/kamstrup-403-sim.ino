@@ -2,7 +2,8 @@
  * Kamstrup MULTICAL 403 M-Bus slave simulator
  * -------------------------------------------
  * Makes a Raspberry Pi Pico answer M-Bus polls the way a MULTICAL 403 heat
- * meter does, so the ESP32-C6 adapter in firmware/ can be exercised without
+ * meter does, so the ESP32-C6 adapter firmware in
+ * examples/matter/KamstrupMultical403/ can be exercised without
  * the real meter on the desk. Identity fields and data records are the ones a
  * 403 actually sends; the values come from a small physical model, so energy,
  * volume, power, flow and the two temperatures stay mutually consistent as
@@ -26,7 +27,7 @@
  *
  * DIF gives length and coding, VIF gives unit and decimal exponent. Every
  * code below is understood by BOTH decoders on the master - classify() in
- * firmware/main/mbus_parser.cpp and the bench table kVifTest[] in the same
+ * examples/matter/KamstrupMultical403/main/mbus_parser.cpp and the bench table kVifTest[] in the same
  * file - so the same telegram works in normal and test parse modes.
  * ------------------------------------------------------------------------ */
 #define DIF_INT16 0x02 /* 16-bit signed integer, little-endian */
@@ -599,7 +600,7 @@ void loop() {
 
   /* ---- short frames: 10 C A CS 16 ---------------------------------------
    * This master re-sends SND_NKE before every REQ_UD2 and never toggles the
-   * FCB bit (see mbus_request_data() in firmware/main/mbus.cpp), so nothing
+   * FCB bit (see mbus_request_data() in examples/matter/KamstrupMultical403/main/mbus.cpp), so nothing
    * below may depend on FCB state. */
   if (n == 5) {
     uint8_t c = rx[1];
